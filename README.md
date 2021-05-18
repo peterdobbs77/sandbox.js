@@ -34,6 +34,14 @@
     - [JavaScript](#javascript)
 - [Contribution](#contribution)
 
+# Peter's Edits
+
+* 18 May 2021
+  * updated events to STU2 types ("resourceType"-"action", e.g. ImagingStudy-open)
+  * moved style to CSS file
+  * fixed some audit errors in dependencies
+  * changed formatting to my VS Code setting
+
 # Introduction
 FHIRcast® is an HL7 specification designed to provide a lightweight, inexpensive and http-based application context synchronization standard. Find out more at [fhircast.org](http://fhircast.org).
 

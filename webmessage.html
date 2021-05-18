@@ -1,71 +1,71 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Web messaging demo</title>
-        <style>
-            body {padding: 2px;  background-color: rgb(255,255,204);font-family: Arial, Helvetica, sans-serif; font-weight: 500;border: 1px solid black; font-size: 16}
-            header {background-color:white; text-align:center; border-bottom: 1px solid black;}
-            h2 { display: inline; background-color:white; text-align:center;}
-            div.cds, div.reporting,div.ai {border-top: 1px solid black;}
-            label,button {padding: 2px; display: inline-block;width: 24.5%}
-            input,textarea,select {width: 65%;border:1px solid}
-            textarea {vertical-align: top;background-color:whitesmoke}
-            textarea.textAreaMonitor {width: 99%;font-family: "Segoe UI Emoji";}
-        </style>        
-    </head>
-    <body>
-        <header><h2><span id="docTitle">EMR Client - HTML5 Web Messaging</span></h2></header>       
+
+<head>
+    <title>Web messaging demo</title>
+    <style src="style.css"></style>
+</head>
+
+<body>
+    <header>
+        <h2><span id="docTitle">EMR Client - HTML5 Web Messaging</span></h2>
+    </header>
+    </br>
+    <label>Receive Web Messages:</label>
+    <textarea id="receiveMessage"></textarea>
+    </br></br>
+    <div class="cds">
         </br>
-        <label>Receive Web Messages:</label>
-        <textarea id="receiveMessage"></textarea>
+        <button onclick="postMessage('https://cds-fhircast.azurewebsites.net','cds','iframecds')">Send Web Message to
+            the iframe</button>
+        <textarea id="cds">Good afternoon from the EMR client</textarea>
+        <iframe id="iframecds" src="https://cds-fhircast.azurewebsites.net?webmessage=true" width="750"
+            height="130"></iframe>
         </br></br>
-        <div class="cds">
-            </br>
-            <button onclick="postMessage('https://cds-fhircast.azurewebsites.net','cds','iframecds')">Send Web Message to the iframe</button>
-            <textarea id="cds">Good afternoon from the EMR client</textarea>
-            <iframe id="iframecds" src="https://cds-fhircast.azurewebsites.net?webmessage=true" width="750" height="130" ></iframe>
-            </br></br>
-        </div>
-        
-       <div class="reporting">
+    </div>
+
+    <div class="reporting">
         </br>
-            <button onclick="postMessage('https://reporting-fhircast.azurewebsites.net','Reporting','iframeReporting')">Send Web Message to the iframe</button>
-            <textarea id="Reporting">Good afternoon from the EMR client</textarea>
-            <iframe id="iframeReporting" src="https://reporting-fhircast.azurewebsites.net?webmessage=true" width="750" height="130" ></iframe>
-            </br></br>
-        </div>
-        
-        <div class="ai">
-            </br>
-            <button onclick="launchAIClient()">Launch AI Client in another window</button>
-            </br>
-            <button onclick="postMessageAI('https://ai-fhircast.azurewebsites.net','ai')">Send Web Message to the other window</button>
-            <textarea id="ai">Hello from the EMR client</textarea>
-        </div>
+        <button onclick="postMessage('https://reporting-fhircast.azurewebsites.net','Reporting','iframeReporting')">Send
+            Web Message to the iframe</button>
+        <textarea id="Reporting">Good afternoon from the EMR client</textarea>
+        <iframe id="iframeReporting" src="https://reporting-fhircast.azurewebsites.net?webmessage=true" width="750"
+            height="130"></iframe>
+        </br></br>
+    </div>
+
+    <div class="ai">
+        </br>
+        <button onclick="launchAIClient()">Launch AI Client in another window</button>
+        </br>
+        <button onclick="postMessageAI('https://ai-fhircast.azurewebsites.net','ai')">Send Web Message to the other
+            window</button>
+        <textarea id="ai">Hello from the EMR client</textarea>
+    </div>
     <script>
-        var aiClient=null;
-        function launchAIClient(){
-            aiClient=window.open('https://ai-fhircast.azurewebsites.net?webmessage=true');
+        var aiClient = null;
+        function launchAIClient() {
+            aiClient = window.open('https://ai-fhircast.azurewebsites.net?webmessage=true');
         }
-        function postMessageAI(url,elementId){
-            var message= document.getElementById(elementId).value;
-            aiClient.postMessage(message,'*');         
+        function postMessageAI(url, elementId) {
+            var message = document.getElementById(elementId).value;
+            aiClient.postMessage(message, '*');
         }
 
-        function postMessage(url,elementId,frameId){
-                var o = document.getElementById(frameId);
-                var message= document.getElementById(elementId).value;
-               o.contentWindow.postMessage(message, '*');
+        function postMessage(url, elementId, frameId) {
+            var o = document.getElementById(frameId);
+            var message = document.getElementById(elementId).value;
+            o.contentWindow.postMessage(message, '*');
         }
 
         function receiver(event) {
-//	    if (event.origin == 'http://example.net') {
-		    document.getElementById('receiveMessage').value=event.data;
-//	    }   
+            //	    if (event.origin == 'http://example.net') {
+            document.getElementById('receiveMessage').value = event.data;
+            //	    }   
         }
-    
+
         window.addEventListener('message', receiver, false);
-        </script>
-    </body>
+    </script>
+</body>
+
 </html>
-    
